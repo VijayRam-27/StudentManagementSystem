@@ -1,0 +1,44 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block page_title %}Edit Course | #ID: {{course.id}}{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" action="{% url 'edit_course_save'%}" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% if messages %}
+                            <div class="form-group">
+                                {%for message in messages%}
+                                {% if message.tags == 'success'%}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% else %}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label>Course name</label>
+                                <input type="text" class="form-control"
+                                       placeholder="Enter Course Name" name="course_name" value="{{course.course_name}}">
+                                <input type="hidden" value="{{course.id}}" name="course_id">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-block">Update Course</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock main_content %}
