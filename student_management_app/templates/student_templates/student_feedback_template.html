@@ -1,0 +1,70 @@
+{% extends 'student_templates/base_template.html' %}
+{% block page_title %}
+Staff Feedback
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- form start -->
+                    <form action="{% url 'student_feedback_save'%}" method="post">
+                        {% csrf_token %}
+                           <div class="card-body">
+                            {% if messages %}
+                            <div class="form-group">
+                                {%for message in messages%}
+                                {% if message.tags == 'success'%}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% else %}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <div class="form-group">
+                                <label>Feedback message</label>
+                                <textarea name="feedback" id="" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-block" id="fetch_student">Apply Leave</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+          <h4>Leave History</h4>
+           <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- form start -->
+                   <div class="table">
+                       <table class="table">
+                           <tr>
+                               <th>ID</th>
+                               <th>Feedback</th>
+                               <th>Feedback Reply</th>
+                           </tr>
+                            {% for feed in feedback %}
+                            <tr>
+                                <td>{{feed.id}}</td>
+                                <td>{{feed.feedback}}</td>
+                                <td>{{feed.feedback_reply}}</td>
+                           </tr>
+                            {% endfor %}
+                       </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock main_content %}
+{% block custom_js %}
+{% endblock custom_js %}

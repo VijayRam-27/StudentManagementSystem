@@ -1,0 +1,138 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block page_title %}
+View Attendance
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                        <div class="card-body">
+                            {% if messages %}
+                            <div class="form-group">
+                                {%for message in messages%}
+                                {% if message.tags == 'success'%}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% else %}
+                                <div class="alert alert-success" style="margin-top:10px;">{{message}}</div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <div class="form-group">
+                                <label>Subject Name</label>
+                                <select class="form-control"  name="subject" id="subject">
+                                    {% for subject in subjects %}
+                                       <option value="{{subject.id}}">{{subject.subject_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Session Year</label>
+                                <select class="form-control"  name="session_year" id="session_year">
+                                    {% for session in sessions %}
+                                       <option value="{{session.id}}">{{session.session_start_year}} - {{session.session_end_year}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary btn-block" id="fetch_attendance_date">Fetch Attendance</button>
+                        </div>
+
+                            <div class="card-body " id="append_drop"></div>
+                        <div class="card-body " id="no_date" style="display:none;">
+                            <div class="form-group">
+                                <div class="alert alert-danger" style="margin-top:10px;">No Attendance Date Found</div>
+                            </div>
+                        </div>
+                         <div class="card-footer" id="fetch_student" style="display:none;">
+                            <button type="submit" class="btn btn-primary btn-block" id="fetch_student_btn">Fetch Student</button>
+                        </div>
+                        <div id="checkbox" class="card-body"></div>
+                </div>
+            </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    $(document).ready(function(){
+
+        $(document).on('click', "#fetch_attendance_date", function(){
+              var subject = document.getElementById("subject").value;
+              var session_year = document.getElementById("session_year").value;
+
+              $.ajax({
+                 url: '{% url 'get_attendance_dates' %}',
+                 type:'POST',
+                 data:{subject:subject, session_year:session_year}
+              })
+              .done(function(response){
+                  var data = JSON.parse(response);
+                  if(data.length>0){
+                      $("#append_drop").show();
+                      $("#fetch_student").show();
+                      $("#no_date").hide();
+
+                      var html="<div class='form-group'><label>Attendance Date</label><select class='form-control'  name='attendance_date' id='attendance_date'>";
+                      for(key in data){
+                         html+= "<option value='"+data[key]['id']+"'>"+data[key]['attendance_date']+"</option>";
+                      }
+                      html+="</selection></div>";
+                      $("#append_drop").html(html);
+                  }else{
+                      $("#no_date").show();
+                      $("#fetch_student").hide();
+                      $("#append_drop").hide();
+                  }
+
+              }).fail(function(){
+                 alert("Error")
+              })
+        })
+
+        $('#fetch_student').click(function(){
+              var attendance_date = document.getElementById("attendance_date").value;
+              var subject = document.getElementById("subject").value;
+              var session_year = document.getElementById("session_year").value;
+
+              $.ajax({
+                 url: '{% url 'fetch_student_data' %}',
+                 type:'POST',
+                 data:{attendance_date:attendance_date, subject:subject, session_year:session_year}
+              })
+              .done(function(response){console.log(response)
+                 var json_data = JSON.parse(response)
+                 div_append = "<div class ='form-group'><div class='row'>";
+                 for (key in json_data){console.log(json_data[key]['status'])
+                    div_append+="<div class='col-lg-3'><div class='form-check'>";
+
+                     div_append+= "<label class='form-check-label'>"+json_data[key]['name']+"</label>";
+                     if(json_data[key]['status']){
+                         div_append += "<b>[Present]</b>";
+                     }else{
+                         div_append += "<b>[Absent]</b>";
+                     }
+                     div_append += "</div></div>";
+                 }
+                 div_append+="</div></div>";
+                 div_append+="<div class='form-group'>";
+                 div_append+="</div>";
+                 $("#checkbox").html(div_append);
+              })
+              .fail(function(){
+                  alert("Error Fetching Student Data");
+              })
+        })
+
+    })
+</script>
+{% endblock custom_js %}

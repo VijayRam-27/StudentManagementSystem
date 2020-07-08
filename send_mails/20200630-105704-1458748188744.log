@@ -1,0 +1,20 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: vijay@gmail.com
+Date: Tue, 30 Jun 2020 05:27:04 -0000
+Message-ID: <159349482402.6372.9293765851339027356@Vj-Pavilion>
+
+
+To initiate the password reset vijay for student management system
+
+http://127.0.0.1:8000/accounts/reset/Mg/5hs-8df6c7f3b245dcd6789a/
+
+Please use the above link to reset
+
+Thanks
+StudentManagementSystem
+
+-------------------------------------------------------------------------------

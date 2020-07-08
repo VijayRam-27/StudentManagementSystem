@@ -1,0 +1,25 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: vijay@gmail.com
+Date: Mon, 29 Jun 2020 12:19:43 -0000
+Message-ID: <159343318345.8564.17545912654610777760@Vj-Pavilion>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/accounts/reset/Mg/5hr-d97316206d767b84fe83/
+
+Your username, in case you’ve forgotten: vijay
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

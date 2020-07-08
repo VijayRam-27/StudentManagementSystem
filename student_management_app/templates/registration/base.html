@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a href="../../index2.html"><b>Student Management System</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    {% block side_content %}
+    {% endblock side_content%}
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+
+</body>
+</html>
+{% endblock %}

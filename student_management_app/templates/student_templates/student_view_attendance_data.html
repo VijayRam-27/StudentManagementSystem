@@ -1,0 +1,69 @@
+{% extends 'student_templates/base_template.html' %}
+{% block page_title %}
+View Attendance
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div class="row">
+                        <!-- /.col -->
+                        {% if attendances %}
+                        {% for attendance in attendances%}
+                        {% if attendance.status == True %}
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="info-box bg-success">
+                                <span class="info-box-icon"><i class="far fa-thumbs-up"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Date</span>
+                                    <span class="info-box-number">{{attendance.attendance_id.attendance_date}}</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"></div>
+                                    </div>
+                                    <span class="progress-description"><b>Present</b></span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        {% else %}
+                        <!-- /.col -->
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="info-box bg-danger">
+                                <span class="info-box-icon"><i class="far fa-thumbs-down"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Date</span>
+                                    <span class="info-box-number">{{attendance.attendance_id.attendance_date}}</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 100%"></div>
+                                    </div>
+                                    <span class="progress-description"><b>Absent</b></span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- /.col -->
+                        {% endif %}
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+{% endblock main_content %}
+
